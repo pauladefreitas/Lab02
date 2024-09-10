@@ -1,0 +1,68 @@
+@startuml
+class Usuario {
+- usuarioId: int
+-login: String
+-senha: String
+-tipoUsuario: String
++fazerLogin()
++fazerLogout()
++fazerCadastro()
++modificarPedido(pedidoID: int)
+}
+
+class Cliente {
+-RG: String
+-CPF: String
+-nome: String
+-endereco: String
+-profissao: String
+-contratosAprovados: List<PedidoAluguel>
++introduzirPedido()
++consultarPedido(pedidoID: int)
++cancelarPedido(pedidoID: int)
+}
+
+class Agente {
+-agenteId: int
+-nome: String
+-tipoAgente: String
++avaliarPedido(pedidoId: int)
+}
+
+class PedidoAluguel {
+-pedidoId: int
+-dataCriacao: Date
+-status: String
+-periodoContrato: int
+-opcaoCompra: boolean
+}
+
+class Automovel {
+-automovelId: int
+-matricula: String
+-ano: int
+-marca: String
+-modelo: String
+-placa: String
+}
+
+class ContratoAluguel {
+-contratoId: int
+-dataInicio: Date
+-dataFim: Date
+-termos: String
+}
+
+class ContratoCredito {
+-contratoCreditoId: int
+-termos: String
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Agente
+Cliente  --  PedidoAluguel
+Agente  --  PedidoAluguel 
+PedidoAluguel  --  Automovel 
+PedidoAluguel  --  ContratoAluguel
+PedidoAluguel  --  ContratoCredito 
+@enduml
