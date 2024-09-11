@@ -1,0 +1,27 @@
+@startuml
+
+"Cliente" as c
+c <-right- (UC2)
+c <-- (UC5)
+c <-- (UC6)
+
+"Agente" as a
+a <-- (UC3)
+a <-left- (UC4)
+a <-down- (UC7)
+
+"Usuário" as user
+user -down-> (UC1)
+
+user <|-right- c
+user <|-left- a
+
+"Cadastrar" as (UC1)
+"Gerenciar pedidos" as (UC2)
+"Modificar pedidos" as (UC3)
+"Avaliar pedidos" as (UC4)
+"Gerenciar Dados dos Clientes" as (UC5)
+"Consultar Contratos e Veículos" as (UC6)
+"Analisar Pedido Financeiramente" as (UC7)
+
+@enduml
