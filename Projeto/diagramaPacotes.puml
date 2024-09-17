@@ -1,97 +1,34 @@
 @startuml
-package "Sistema de Assinatura de Automóveis" {
+package "Gestão de Pedidos e Contratos" {
+    [Pedido] as Pedido
+    [Contrato] as Contrato
+    [Automóvel] as Automóvel
+    [Crédito] as Crédito
 
-  package "Gestão de Pedidos e Contratos" {
-    class Pedido {
-      -id: int
-      -cliente: Cliente
-      -agente: Agente
-      -automovel: Automovel
-      -status: String
-      -dataCriacao: Date
-      +modificar()
-      +consultar()
-      +cancelar()
-    }
-
-    class Contrato {
-      -id: int
-      -tipo: String
-      -duracaoMeses: int
-      -opcaoCompra: boolean
-      -creditoAssociado: Credito
-      -cliente: Cliente
-      -agente: Agente
-      -automovel: Automovel
-      +avaliar()
-    }
-  }
-
-  package "Gestão de Usuários" {
-    class Cliente {
-      -RG: String
-      -CPF: String
-      -nome: String
-      -endereco: String
-      -profissao: String
-      -empregadores: List<Empregador>
-      -rendimento: List<Rendimento>
-      +introduzirPedido()
-      +modificarPedido()
-      +consultarPedido()
-      +cancelarPedido()
-    }
-
-    class Agente {
-      -id: int
-      -nome: String
-      +avaliarPedido()
-      +modificarPedido()
-    }
-
-    class Empregador {
-      -nome: String
-      -endereco: String
-    }
-
-    class Rendimento {
-      -valor: float
-      -empregador: Empregador
-    }
-  }
-
-  package "Gestão de Automóveis" {
-    class Automovel {
-      -matricula: String
-      -ano: int
-      -marca: String
-      -modelo: String
-      -placa: String
-    }
-  }
-
-  package "Crédito" {
-    class Credito {
-      -id: int
-      -banco: Agente
-      -valor: float
-      -prazo: int
-      -taxaJuros: float
-    }
-  }
-
-
+    Pedido -- Contrato : "Gera"
+    Pedido -- Automóvel : "Inclui"
+    Contrato -- Automóvel : "Referência"
+    Contrato -- Crédito : "Associado"
 }
 
-Pedido --> Cliente
-Pedido --> Automovel
-Pedido --> Agente
-Contrato --> Pedido
-Contrato --> Credito
-Cliente --> Empregador
-Cliente --> Rendimento
-Automovel --> Contrato
-Credito --> Agente
+package "Entidades" {
+    [Cliente] as Cliente
+    [Agente] as Agente
 
+    Cliente -- Pedido : "Faz"
+    Agente -- Pedido : "Avalia"
+    Agente -- Contrato : "Gerencia"
+    Agente -- Crédito : "Concede"
+}
+
+Pedido -[hidden]-> Contrato
+Pedido -[hidden]-> Automóvel
+Contrato -[hidden]-> Automóvel
+Contrato -[hidden]-> Crédito
+
+Cliente -[hidden]-> Pedido
+Agente -[hidden]-> Pedido
+Agente -[hidden]-> Contrato
+Agente -[hidden]-> Crédito
 
 @enduml
