@@ -10,18 +10,28 @@ a <-- (UC3)
 a <-left- (UC4)
 a <-down- (UC7)
 
-"Usuário" as user
-user -down-> (UC1)
+"Sistema" as s
+s --> (UC11)
+s --> (UC10)
 
-user <|-right- c
-user <|-left- a
+"Banco" as b 
+b --> (UC12)  
 
 "Cadastrar" as (UC1)
+"Cadastrar " as (UC8)
+
+c <-- (UC1)
+a <-- (UC8)
+
+
 "Gerenciar pedidos" as (UC2)
 "Modificar pedidos" as (UC3)
 "Avaliar pedidos" as (UC4)
 "Gerenciar Dados dos Clientes" as (UC5)
 "Consultar Contratos e Veículos" as (UC6)
 "Analisar Pedido Financeiramente" as (UC7)
+"Armazenar Dados Veiculos" as (UC10)
+"Verificar tipo de contrato" as (UC11)
+"Atribuir contrato de credito" as (UC12)
 
 @enduml
