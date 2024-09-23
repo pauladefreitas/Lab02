@@ -6,6 +6,8 @@ class Cliente {
     - endereco: String
     - profissao: String
     - contratosAprovados: List<PedidoAluguel>
+    - empregadores: List<Empregador>
+    - rendimentos: List<Rendimento>
     + introduzirPedido()
     + consultarPedido(pedidoID: int)
     + cancelarPedido(pedidoID: int)
@@ -18,6 +20,17 @@ class Agente {
     - tipoAgente: String
     + avaliarPedido(pedidoId: int)
     + modificarPedido(pedidoID: int)
+}
+
+class Empregador {
+    - userId: int
+    - nome: String
+}
+
+class Rendimento {
+    - userId: int
+    - valor: String
+    - descricao: String
 }
 
 class PedidoAluguel {
@@ -51,6 +64,8 @@ class ContratoCredito {
 }
 
 Cliente -- PedidoAluguel
+Cliente -- Empregador
+Cliente -- Rendimento
 Agente -- PedidoAluguel
 ContratoAluguel -- Automovel
 PedidoAluguel -- ContratoAluguel
