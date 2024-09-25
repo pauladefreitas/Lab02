@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class Rendimento {
+public class Rendimento {
 
     public static final String TABLE_NAME = "rendimento";
 

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-class Empregador {
+public class Empregador {
 
     public static final String TABLE_NAME = "empregador";
 

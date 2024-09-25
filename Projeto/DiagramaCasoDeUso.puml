@@ -20,7 +20,7 @@ b --> (UC12)
 "Cadastrar" as (UC1)
 "Cadastrar " as (UC8)
 
-c <-- (UC1)
+c <-- (UC1) 
 a <-- (UC8)
 
 
