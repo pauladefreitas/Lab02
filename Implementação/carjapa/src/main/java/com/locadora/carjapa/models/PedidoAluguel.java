@@ -34,7 +34,11 @@ public class PedidoAluguel {
 
     @Column(name = "dataInicio")
     private LocalDate dataInicio;
-
+    
+    @Column(name = "credito", length = 100, nullable = false)
+    @NotNull
+    private boolean credito;
+    
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
