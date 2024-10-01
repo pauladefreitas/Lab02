@@ -1,0 +1,44 @@
+@startuml
+package "Cliente Web" {
+  [Formulário de Cadastro e Login]
+  [Página de Pedidos]
+}
+
+package "Agente Web" {
+  [Página de Avaliação de Pedidos]
+}
+
+package "Serviço de Autenticação" {
+  [Verificação de Credenciais]
+}
+
+package "Gestão de Pedidos" {
+  [Gerenciador de Pedidos]
+  [Análise Financeira]
+}
+
+package "Gestão de Contratos" {
+  [Gerenciamento de Contratos]
+  [Gerenciamento de Automóveis]
+}
+
+package "Banco de Dados Central" {
+  [Dados de Clientes]
+  [Dados de Pedidos]
+  [Dados de Automóveis]
+  [Dados de Contratos]
+}
+
+[Formulário de Cadastro e Login] --> [Verificação de Credenciais]
+[Página de Pedidos] --> [Gerenciador de Pedidos]
+[Gerenciador de Pedidos] --> [Dados de Pedidos]
+
+[Página de Avaliação de Pedidos] --> [Análise Financeira]
+[Análise Financeira] --> [Gerenciamento de Contratos]
+
+[Gerenciamento de Contratos] --> [Gerenciamento de Automóveis]
+[Gerenciamento de Automóveis] --> [Dados de Automóveis]
+
+[Gerenciador de Pedidos] --> [Dados de Clientes]
+
+@enduml
