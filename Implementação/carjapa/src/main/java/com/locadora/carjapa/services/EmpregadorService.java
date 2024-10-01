@@ -2,6 +2,7 @@ package com.locadora.carjapa.services;
 
 import java.util.Optional;
 
+import com.locadora.carjapa.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +17,21 @@ public class EmpregadorService {
     @Autowired
     private EmpregadorRepository empregadorRepository;
 
+    @Autowired
+    private UserService userService;
+
     public Empregador findById(Long id) {
-        Optional<Empregador> Empregador = this.empregadorRepository.findById(id);
-        return Empregador.orElseThrow(() -> new RuntimeException(
+        Optional<Empregador> empregador = this.empregadorRepository.findById(id);
+        return empregador.orElseThrow(() -> new RuntimeException(
                 "Usuário não encontrado! Id: " + id + ", Tipo: " + Empregador.class.getName()));
     }
 
     @Transactional
     public Empregador create(Empregador obj) {
+        User user = this.userService.findById(obj.getUser().getId());
         obj.setId(null);
         obj.setNome(obj.getNome());
-        obj.setUser(obj.getUser());
+        obj.setUser(user);
         obj = this.empregadorRepository.save(obj);
         return obj;
     }
@@ -34,7 +39,6 @@ public class EmpregadorService {
     @Transactional
     public Empregador update(Empregador obj) {
         Empregador newObj = findById(obj.getId());
-        newObj.setUser(obj.getUser());
         newObj.setNome(obj.getNome());
         return this.empregadorRepository.save(newObj);
     }

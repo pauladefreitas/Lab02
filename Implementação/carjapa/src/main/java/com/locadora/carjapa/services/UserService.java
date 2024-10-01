@@ -25,7 +25,6 @@ public class UserService {
     @Transactional
     public User create(User obj) {
         obj.setId(null);
-        obj.setPassword(obj.getPassword());
         obj = this.userRepository.save(obj);
         return obj;
     }
