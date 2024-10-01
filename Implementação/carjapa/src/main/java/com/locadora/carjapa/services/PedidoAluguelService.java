@@ -1,9 +1,11 @@
 package com.locadora.carjapa.services;
 
 import com.locadora.carjapa.exception.PeriodoContratoInvalidoException;
+import com.locadora.carjapa.models.Automovel;
 import com.locadora.carjapa.models.Contrato;
 import com.locadora.carjapa.models.PedidoAluguel;
 import com.locadora.carjapa.models.User;
+import com.locadora.carjapa.repositories.AutomovelRepository;
 import com.locadora.carjapa.repositories.ContratoRepository;
 import com.locadora.carjapa.repositories.PedidoAluguelRepository;
 import jakarta.transaction.Transactional;
@@ -23,8 +25,12 @@ public class PedidoAluguelService {
 
     @Autowired
     private ContratoRepository contratoRepository;
+
     @Autowired
     private ContratoService contratoService;
+
+    @Autowired
+    private AutomovelRepository automovelRepository;
 
     public PedidoAluguel findById(Long id) {
         Optional<PedidoAluguel> pedidoAluguel = this.pedidoAluguelRepository.findById(id);
@@ -41,10 +47,11 @@ public class PedidoAluguelService {
 
         validarPeriodoContrato(obj.getPeriodoContrato());
 
-        Contrato contrato = new Contrato();
-        contrato.setPedido(obj);
-        contrato.setValor(10.00);
-        contrato = this.contratoService.create(contrato);
+        Automovel automovel = this.automovelRepository.findById(obj.getAutomovel().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Automóvel não encontrado"));
+        obj.setAutomovel(automovel);
+
+        Contrato contrato = gerarContrato(obj);
 
         obj.setContrato(contrato);
         obj = this.pedidoAluguelRepository.save(obj);
@@ -56,6 +63,18 @@ public class PedidoAluguelService {
         if (periodoContrato != 12 && periodoContrato != 24 && periodoContrato != 36 && periodoContrato != 48) {
             throw new PeriodoContratoInvalidoException("O período do contrato deve ser 12, 24, 36 ou 48 meses.");
         }
+    }
+
+    private Contrato gerarContrato(PedidoAluguel obj) {
+        Contrato contrato = new Contrato();
+        contrato.setPedido(obj);
+
+        double valorMensal = obj.getAutomovel().getValorMensal();
+        int periodo = obj.getPeriodoContrato();
+
+        contrato.setValor(valorMensal * periodo);
+
+        return this.contratoService.create(contrato);
     }
 
     @Transactional

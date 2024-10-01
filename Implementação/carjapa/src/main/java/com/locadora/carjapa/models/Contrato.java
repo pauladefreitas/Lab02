@@ -2,6 +2,7 @@ package com.locadora.carjapa.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -25,6 +26,7 @@ public class Contrato {
     private PedidoAluguel pedido;
 
     @Column(name = "valor")
+    @NotNull
     private double valor;
 
     @Column(name = "dataFim")

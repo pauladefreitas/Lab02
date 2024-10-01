@@ -40,6 +40,7 @@ public class Automovel {
     @NotBlank
     private String placa;
 
-    @OneToMany(mappedBy = "automovel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PedidoAluguel> pedidosAluguel = new ArrayList<>();
+    @Column(name = "valorMensal", nullable = false)
+    private double valorMensal;
+
 }
