@@ -1,0 +1,42 @@
+@startuml
+package "Gestão de Pedidos e Contratos" {
+    [PedidoAluguel] as PedidoAluguel
+    [ContratoAluguel] as ContratoAluguel
+    [Automóvel] as Automovel
+    [ContratoCredito] as ContratoCredito
+
+    PedidoAluguel -- ContratoAluguel : "Gera"
+    PedidoAluguel -- Automovel : "Inclui"
+    ContratoAluguel -- Automovel : "Referência"
+    ContratoAluguel -- ContratoCredito : "Associado"
+}
+
+package "Entidades" {
+    [Cliente] as Cliente
+    [Agente] as Agente
+
+    Cliente -- PedidoAluguel : "Faz"
+    Agente -- PedidoAluguel : "Avalia"
+    Agente -- ContratoAluguel : "Gerencia"
+    Agente -- ContratoCredito : "Concede"
+}
+
+package "Auxiliares" {
+    [Empregador] as Empregador
+    [Rendimento] as Rendimento
+
+    Cliente -- Empregador : "Tem"
+    Cliente -- Rendimento : "Tem"
+}
+
+PedidoAluguel -[hidden]-> ContratoAluguel
+PedidoAluguel -[hidden]-> Automovel
+ContratoAluguel -[hidden]-> Automovel
+ContratoAluguel -[hidden]-> ContratoCredito
+
+Cliente -[hidden]-> PedidoAluguel
+Agente -[hidden]-> PedidoAluguel
+Agente -[hidden]-> ContratoAluguel
+Agente -[hidden]-> ContratoCredito
+
+@enduml
