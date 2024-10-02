@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body{
+    background-color: #6495ED;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.forms{
+    display: flex;
+    justify-content: space-around;
+}
+
+.cadPedido{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    flex-direction: column;
+    background-color:white;
+    padding: 25px;
+}
+
+.visualizarPedido{
+    background-color: #fff;
+    padding: 25px;
+    width: 40%;
+}
+
+.visualizarPedido h1{
+    text-align: center;
+}
+
+input{
+    outline: none;
+    border: none;
+    padding: 10px;
+    background-color: rgb(240, 240, 240);
+}
+
+button{
+    padding: 10px;
+    border: none;
+    background-color: #003088;
+    color: white;
+}

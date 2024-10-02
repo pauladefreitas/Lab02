@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Cadastro de Pedido de Aluguel</title>
+</head>
+<body>
+    <div class="forms">
+        <div class="cadPedido">
+            <h1>Cadastro de Pedido de Aluguel</h1>
+            <form id="rentalOrderForm">
+                <label for="periodoContrato">Período do Contrato (em meses):</label>
+                <input type="number" id="periodoContrato" name="periodoContrato" min="12" max="48" step="12" required><br><br>
+        
+                <label for="opcaoCompra">Opção de Compra:</label>
+                <input type="checkbox" id="opcaoCompra" name="opcaoCompra"><br><br>
+        
+                <label for="dataInicio">Data de Início:</label>
+                <input type="date" id="dataInicio" name="dataInicio" required><br><br>
+    
+                <label for="credito">Credito (seguro):</label>
+                <input type="checkbox" id="credito" name="credito"><br><br>
+        
+                <label for="userId">ID do Usuário:</label>
+                <input type="number" id="userId" name="userId" required><br><br>
+        
+                <label for="automovelId">ID do Automóvel:</label>
+                <input type="number" id="automovelId" name="automovelId" required><br><br>
+    
+                <button type="submit">Cadastrar Pedido de Aluguel</button>
+            </form>
+        </div>
+
+        <div class="visualizarPedido">
+            <h1>Visualizar Pedidos</h1>
+
+            <label for="pedidoId">ID do Pedido:</label>
+            <input type="number" id="pedidoId" name="pedidoId"><br><br>
+            <button id="checkStatusBtn">Verificar Status</button>
+
+            <p>Status: <span id="statusText"></span> </p>
+        </div>
+    </div>
+    
+
+</body>
+<script>
+    document.getElementById('rentalOrderForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const rentalOrderData = {
+            periodoContrato: parseInt(document.getElementById('periodoContrato').value),
+            opcaoCompra: document.getElementById('opcaoCompra').checked,
+            dataInicio: document.getElementById('dataInicio').value,
+            credito: document.getElementById('credito').checked,
+            user: {
+                id: parseInt(document.getElementById('userId').value)
+            },
+            automovel: {
+                id: parseInt(document.getElementById('automovelId').value)
+            }
+        };
+        
+        fetch('http://localhost:8080/pedidoAluguel', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(rentalOrderData)
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Pedido de aluguel cadastrado com sucesso!');
+            } else {
+                alert('Erro ao cadastrar pedido de aluguel.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Erro na conexão com o servidor.');
+        });
+    });
+
+    document.getElementById('checkStatusBtn').addEventListener('click', function() {
+    const pedidoId = document.getElementById('pedidoId').value;
+
+    if (!pedidoId) {
+        alert('Por favor, insira o ID do pedido.');
+        return;
+    }
+
+    fetch(`http://localhost:8080/pedidoAluguel/${pedidoId}`)
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('statusText').textContent = data.status;
+    })
+    .catch(error => {
+        console.error('Erro ao buscar o status do pedido:', error);
+        document.getElementById('statusText').textContent = 'Erro ao buscar o status.';
+    });
+});
+
+</script>
+</html>

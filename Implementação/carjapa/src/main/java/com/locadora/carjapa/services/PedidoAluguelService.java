@@ -44,7 +44,7 @@ public class PedidoAluguelService {
         obj.setId(null);
         obj.setUser(user);
         obj.setDataInicio(LocalDate.now());
-
+        obj.setStatus("pendente");
         validarPeriodoContrato(obj.getPeriodoContrato());
 
         Automovel automovel = this.automovelRepository.findById(obj.getAutomovel().getId())
